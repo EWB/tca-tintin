@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: portfolio_image_style_263_x_263_
+label: 'portfolio image style (263 x 263)'
+effects:
+  d924c392-c281-4eb2-823a-58296a48f909:
+    uuid: d924c392-c281-4eb2-823a-58296a48f909
+    id: image_scale_and_crop
+    weight: 2
+    data:
+      width: 263
+      height: 263

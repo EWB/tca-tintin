@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Portfolio category'
+vid: portfolio_category
+description: 'You can reorganize the terms in Category using their drag-and-drop handles, and group terms under a parent term by sliding them '
+hierarchy: 0
+weight: 0

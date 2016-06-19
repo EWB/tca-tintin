@@ -1,0 +1,12 @@
+name: 'Features Services'
+description: 'Provides Services content type and views with related configuration.'
+type: module
+core: 8.x
+dependencies:
+  - field
+  - menu_ui
+  - node
+  - path
+  - text
+  - user
+  - views

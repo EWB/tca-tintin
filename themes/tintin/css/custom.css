@@ -1,0 +1,155 @@
+@media (max-width: 767px) {
+  .services-section i.fa {
+    position: static !important;
+  }
+  .services-section h4 {
+    padding-top: 0px;
+  }
+  .portfolio-modal img {
+    width: 100%;
+  }
+  .cat,
+  .cat ol {
+    padding-left: 0;
+  }
+  .cat ol li {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .intro-text {
+    padding-bottom: 50px;
+  }
+  .path-user .main-container>.container {
+    background-color: white;
+    width: 95%;
+    padding: 15px;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+  }
+}
+
+.main-container section.col-sm-12,
+.main-container section.col-sm-12 .panels-flexible-row {
+  padding: 0px;
+}
+.main-container section.col-sm-12 .panels-flexible-region {
+  width: 100%;
+}
+header > section {
+  position: relative;
+  height: 100%;
+
+/*
+  background: url(../images/header-bg.png) no-repeat;
+*/
+  background-size: cover;
+}
+.logo {
+  padding-right: 5px !important;
+}
+.logo img {
+  max-width: 30px;
+  margin-top: 2px;
+}
+.portfolio-items .views-row + .views-field-field-portfolio-category>.isotope>.isotope-item.isotope-hidden {
+  display: none !important;
+}
+.Contact .col-md-8 .col-md-4 a {
+  color: #1c424d;
+}
+#boxes-box-contact_details .container {
+  padding-top: 80px;
+}
+.portfolio-modal .btn-primary .fa {
+  color: #a7b6ba !important;
+  font-size: 14px !important;
+}
+.portfolio-modal .btn-primary {
+  margin-top: 30px;
+}
+.portfolio-modal img {
+  margin: 0px auto 30px auto;
+  max-width: 450px;
+}
+.contact-form .error,
+div.error, table tr.error {
+  background: none;
+}
+.alert-danger a {
+  color: #FFFFFF;
+}
+body input.error,
+body textarea.error {
+  border: 1px solid #BC3E2E !important;
+  color: #BC3E2E;
+}
+input[type=checkbox], input[type=radio] {
+  height: auto;
+}
+/* See .color-success in Seven's colors.css */
+.region-content .messages {
+  padding: 15px 20px 15px 35px !important;
+}
+.messages--status {
+  color: #325e1c !important;
+  background-color: #f3faef !important;
+  border-color: #c9e1bd #c9e1bd #c9e1bd transparent;  /* LTR */
+  box-shadow: -8px 0 0 #77b259; /* LTR */
+}
+
+/* See .color-warning in Seven's colors.css */
+.messages--warning {
+  background-color: #fdf8ed !important;
+  border-color: #f4daa6 #f4daa6 #f4daa6 transparent;  /* LTR */
+  color: #734c00 !important;
+  box-shadow: -8px 0 0 #e09600; /* LTR */
+}
+
+/* See .color-error in Seven's colors.css */
+.messages--error {
+  background-color: #fcf4f2 !important;
+  color: #a51b00 !important;
+  border-color: #f9c9bf #f9c9bf #f9c9bf transparent;  /* LTR */
+  box-shadow: -8px 0 0 #e62600; /* LTR */
+}
+.messages--error p.error {
+  color: #a51b00 !important;
+}
+
+@media (min-width:768px) and (max-width:992px) {
+  .services-section i.fa {
+    left: 37% !important;
+  }
+}
+
+
+@media (max-width: 603px) {
+label {
+	float: none !important
+}
+.intro-text h1 {
+  font-size: 44px;
+}
+}
+
+@media (max-width: 360px) {
+.hover-bg .hover-text {
+	padding: 22% 10%;
+}
+}
+@media (min-width: 768px) {
+  .path-user .main-container>.container {
+    background-color: white;
+    width: 700px;
+    padding: 30px 30px;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+  }
+
+}
+@media (min-width: 1280px) {
+  body, html {
+    width: 100%;
+    height: 100% !important;
+  }
+}

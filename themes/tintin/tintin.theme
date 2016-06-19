@@ -1,0 +1,207 @@
+<?php
+define('SLIDESHOW_COUNT', 5);
+define('SOCIAL_ICON_COUNT', 10);
+
+use Drupal\Core\Url;
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Template\Attribute;
+use Drupal\file\Plugin\Core\Entity\FileInterface;
+
+/**
+ * Implementation of theme_menu_tree__main_menu().
+ */
+function tintin_menu_tree__main_menu($variables) {
+  return '<ul class="nav navbar-nav navbar-right">' . $variables['tree'] . '</ul>';
+}
+
+/**
+ * Implementation of theme_preprocess_page().
+ */
+function tintin_preprocess_page(&$variables) {
+  $variables['preloader'] = base_path() . drupal_get_path('theme', 'tintin') . '/img/preloader.gif';
+  if (theme_get_setting('slideshow_display')) {
+    $variables['slider_content'] = _tintin_get_slider_contents();
+  }
+  // Hide promoted front page content.
+  $is_front = \Drupal::service('path.matcher')->isFrontPage();
+  if (isset($variables['page']['content']['tintin_content']) && $is_front) {
+    unset($variables['page']['content']['tintin_content']);
+  }
+  $variables['social_icons'] = _tintin_get_socialicons();
+}
+
+/**
+ * Function to get home page contents for the slider and responsive block in front page
+ */
+function _tintin_get_slider_contents() {
+  $slider = '';
+  for ($i = 1; $i <= SLIDESHOW_COUNT; $i++) {
+    $active_class = $i == 1 ? 'active' : 'in-active';
+    $slider .= '<div class="item ' . $active_class . ' demo-text-goes-top"><div class="content-wrapper"><div class="slide-body intro-text">';
+    $slider .= '<h1>' . theme_get_setting("slide_title_{$i}") . '</h1><p>' . theme_get_setting("slide_description_{$i}") . '</p>';
+    $slider .= '</div></div></div>';
+  }
+  return $slider;
+}
+
+/**
+ * Custom function to genetate social icons links.
+ */
+function _tintin_get_socialicons() {
+  $content = '<div class="follow-section"><div class="social"><ul>';
+  for ($i = 1; $i <= 25; $i++) {
+    if (!empty(theme_get_setting("social_class_{$i}"))) {
+      $content .= '<li><a href="' . theme_get_setting("social_url_{$i}") . '" target="_blank"><i class="fa ' . theme_get_setting("social_class_{$i}") . '"></i></a></li>';
+    }
+  }
+  $content .= '</ul></div></div>';
+  return $content;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @param $form
+ *   The form.
+ * @param $form_state
+ *   The form state.
+ */
+function tintin_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  $form['tintin_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Tintin Configurations'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+
+  // Social icon configutation fieldset
+  $form['tintin_settings']['socialicon'] = array(
+    '#type' => 'fieldset',
+    //~ '#tree' => TRUE,
+    '#title' => t('Social icons configuration'),
+    '#prefix' => '<div id="tintin-social-icons">',
+    '#suffix' => '</div>',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+  for ($i = 1; $i <= SOCIAL_ICON_COUNT; $i++) {
+    $form['tintin_settings']['socialicon'][$i] = array(
+      '#type' => 'fieldset',
+      //~ '#tree' => TRUE,
+      '#title' => t("Social icon - {$i}"),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+
+    $form['tintin_settings']['socialicon'][$i]["social_class_{$i}"] = array(
+      '#type' => 'textfield',
+      '#title' => t('Class'),
+      '#description' => t('Enter <a href="https://fortawesome.github.io/Font-Awesome/icons/#brand" target="_blank">font awesome social icon</a> class. for example "fa-facebook" for facebook'),
+      '#default_value' => theme_get_setting("social_class_{$i}"),
+    );
+    $form['tintin_settings']['socialicon'][$i]["social_url_{$i}"] = array(
+      '#type' => 'textfield',
+      '#title' => t('Url'),
+      '#description' => t("Enter your's social sites profile url."),
+      '#default_value' => theme_get_setting("social_url_{$i}"),
+    );
+  }
+
+
+  // Slideshow configurations fieldset.
+  $form['tintin_settings']['slideshow'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Slideshow'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['tintin_settings']['slideshow']['slideshow_display'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show slideshow'),
+    '#default_value' => theme_get_setting('slideshow_display'),
+    '#description'   => t("Check this option to show Slideshow in front page. Uncheck to hide."),
+  );
+  $form['tintin_settings']['slideshow']['slide'] = array(
+    '#markup' => t('You can change the title, description and image of each slide in the following Slide Setting fieldsets.'),
+  );
+
+  for ($i = 1; $i <= SLIDESHOW_COUNT; $i++) {
+    $form['tintin_settings']['slideshow'][$i] = array(
+      '#type' => 'details',
+      '#title' => t("Slide {$i}"),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    );
+    $form['tintin_settings']['slideshow'][$i]["slide_title_{$i}"] = array(
+      '#type' => 'textfield',
+      '#title' => t("Slide {$i} Title"),
+      '#description' => t('You could use html tags too. for example : <strong>Title</strong>'),
+      '#default_value' => theme_get_setting("slide_title_{$i}", 'tintin'),
+    );
+    $form['tintin_settings']['slideshow'][$i]["slide_description_{$i}"] = array(
+      '#type' => 'textarea',
+      '#title' => t("Slide {$i} Description"),
+      '#description' => t('You could use html tags too. for example : <strong>Title</strong>'),
+      '#default_value' => theme_get_setting("slide_description_{$i}", 'tintin'),
+    );
+  }
+}
+
+/**
+ * Implement template_preprocess_views_view_fields_viewname().
+ *
+ * for portfolio views
+ */
+function tintin_preprocess_views_view_fields__portfolio(&$variables) {
+  $view = $variables['view'];
+  $display = $view->current_display;
+  if ($view->current_display == 'block_1' || $view->current_display == 'attachment_1') {
+    if (isset($variables['fields']['nothing'])) {
+
+      //get only title
+      $variables['fields']['nothing']->tintinTitle = _tintin_find_title($variables['fields']['nothing']->content, $display);
+      //get only category
+      $variables['fields']['nothing']->tintinCategory = _tintin_find_category($variables['fields']['nothing']->content, $display);
+    }
+  }
+  elseif ($view->current_display == 'attachment_2') {
+    //get only category
+    //~ $variables['fields']['field_category']->tintinCategory = str_replace(' ', '', $variables['fields']['field_category']->content);
+    $variables['fields']['name']->tintinCategory = str_replace(' ', '', $variables['fields']['name']->content);
+  }
+}
+
+// find title
+function _tintin_find_title($content, $display) {
+  $title = '';
+  $tag = '';
+  if ($display == 'block_1') {
+    $tag = 'h4';
+  }
+  elseif ($display == 'attachment_1') {
+    $tag = 'h2';
+  }
+  $new_title = _tintin_find_value_html_tags($content, $tag);
+  $title = str_replace(' ', '', $new_title);
+  return $title;
+}
+
+// find category
+function _tintin_find_category($content, $display) {
+  $title = '';
+  $tag = '';
+  if ($display == 'block_1') {
+    $tag = 'small';
+  }
+  $new_title = _tintin_find_value_html_tags($content, $tag);
+  $title = str_replace(' ', '', $new_title);
+  return $title;
+}
+
+// find value between html tags
+function _tintin_find_value_html_tags($str, $tag) {
+  $pattern = "/<$tag ?.*>(.*)<\/$tag>/";
+  preg_match($pattern, $str, $matches);
+  return $matches[1];
+}

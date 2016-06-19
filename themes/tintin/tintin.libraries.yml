@@ -1,0 +1,23 @@
+global-styling:
+  version: 1.0
+  css:
+    theme:
+      css/bootstrap.min.css: {}
+      css/animate.min.css: {}
+      css/custom.css: {}
+      css/style.css: {}
+      fonts/font-awesome/css/font-awesome.min.css: {}
+
+  js:
+    js/bootstrap.min.js: {}
+    js/modernizr.custom.js: {}
+    js/wow.min.js: {}
+    js/SmoothScroll.js: {}
+    js/owl.carousel.js: {}
+    js/custom.js: {}
+    js/main.js: {}
+    js/jquery.isotope.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
