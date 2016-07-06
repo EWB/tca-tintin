@@ -267,13 +267,22 @@ a.navbar-brand {
 	background-color: #FFF;
 }
 /* Home Style */
-header {
+/*header {
 	color: #323232;
 	position: relative;
 	height: 100%;
   background: url(../img/tedra-cobb-portrait.jpg) rgba(242, 245, 236, 1);
   background-size: cover;
   background-position: 50% 25%;
+} */
+header {
+    color: #FFFFFF;
+    background-color: #142736;
+    position: relative;
+    height: 100%;
+    background: none;
+    background-size: cover;
+    background-position: 50% 25%;
 }
 .page-wrapper {
   position: relative;
