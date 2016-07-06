@@ -718,12 +718,12 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
 #   include __DIR__ . '/settings.local.php';
 # }
 $databases['default']['default'] = array (
-  'database' => 'tintin_d8',
-  'username' => 'root',
-  'password' => 'root',
+  'database' => 'meadowsw_tca',
+  'username' => 'meadowsw_tca',
+  'password' => 'aLHq6GQsvsZT',
   'prefix' => '',
   'host' => 'localhost',
-  'port' => '3306',
+  'port' => '',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
