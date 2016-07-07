@@ -275,15 +275,7 @@ a.navbar-brand {
   background-size: cover;
   background-position: 50% 25%;
 } */
-header {
-    color: #FFFFFF;
-    background-color: #142736;
-    position: relative;
-    height: 100%;
-    background: none;
-    background-size: cover;
-    background-position: 50% 25%;
-}
+
 .page-wrapper {
   position: relative;
   height: 100%;
